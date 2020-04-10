@@ -125,7 +125,7 @@ def audio_to_video(audio_file, image_file, video_file):
     os.system(command)
 
 def join_videos(screenshare_file, video_file, output_file):
-    command = "%s -i %s -i %s -filter_complex '[0:v]pad=iw*2:ih[int];[int][1:v]overlay=W/2:0[vid]' -map [vid] -c:v libx264 -crf 23 -preset veryfast %s" % (
+    command = "%s -i %s -i %s -filter_complex '[0:v]pad=iw*1.42:ih[int];[int][1:v]overlay=W/1.42:0[vid]' -map [vid] -c:v libx264 -crf 23 -preset veryfast %s" % (
     FFMPEG, screenshare_file, video_file, output_file
     )
     os.system(command)
