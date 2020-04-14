@@ -28,7 +28,7 @@ def get_client(config):
     return client
 
 
-def upload(client, file_path, name, meeting_id):
+def upload(client, file_path, name, meeting_id, project_id):
     print('Uploading: %s' % file_path)
 
     file_name = name + " " + datetime.now().strftime("%d/%m/%Y-%H:%M")
@@ -44,7 +44,15 @@ def upload(client, file_path, name, meeting_id):
         video_data = client.get(uri + '?fields=link').json()
         print('"%s" has been uploaded to %s' % (file_name, video_data['link']))
 
-        # Make an API call to edit the title and description of the video.
+        video_id = uri[uri.rindex('/')+1:]
+
+        # Make an API call to move video to Semblance folder
+        FOLDER_ENDPOINT = '/projects/{project_id}/videos/{video_id}'
+        put_uri = FOLDER_ENDPOINT.format(video_id=video_id, project_id=project_id)        
+
+        response = client.put(put_uri)
+        print(response)
+
         '''
         client.patch(uri, data={
             'name': 'Vimeo API SDK test edit',
@@ -111,6 +119,7 @@ if __name__ == '__main__':
     delete_videos_after_30_day()
     try:
         config = json.load(open(CONFIG_FILE))
+        project_id = config['project_id']
         client = get_client(config)
         # If video not already published to vimeo, publish it
         print("Successfully loaded client")
@@ -118,7 +127,7 @@ if __name__ == '__main__':
             try:
                 #file_url = find("/var/bigbluebutton/published/presentation/"+args.meetingid)
                 file_url = "/var/bigbluebutton/published/presentation/"+args.meetingid+"/"+args.meetingid+".mp4"
-                upload(client,file_url, args.name, args.meeting_id)
+                upload(client,file_url, args.name, args.meetingid, project_id)
                 create_status_upload_vimeo(args.meetingid)
             except HttpError, e:
                 print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
