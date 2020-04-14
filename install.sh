@@ -11,10 +11,12 @@ fi
 # Install python and pip
 apt-get install -y python
 apt-get install -y python-pip
+apt-get install -y python-pycurl
 
 #install google api python client 
 pip install --upgrade google-api-python-client
 pip install oauth2client
+pip install PyVimeo
 
 # Install additional libs need to convertation process
 apt-get install -y curl libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 libva-x11-1 libva-drm1 libfdk-aac-dev
