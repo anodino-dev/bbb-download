@@ -9,14 +9,14 @@ then
 fi
 
 # Install python and pip
-apt-get install -y python
-apt-get install -y python-pip
-apt-get install -y python-pycurl
+apt-get install -y python3
+apt-get install -y python3-pip
+apt-get install -y python3-pycurl
 
 #install google api python client 
-pip install --upgrade google-api-python-client
-pip install oauth2client
-pip install PyVimeo
+pip3 install --upgrade google-api-python-client
+pip3 install oauth2client
+pip3 install PyVimeo
 
 # Install additional libs need to convertation process
 apt-get install -y curl libsdl2-mixer-2.0-0 libsdl2-image-2.0-0 libsdl2-2.0-0 libva-x11-1 libva-drm1 libfdk-aac-dev
@@ -30,13 +30,13 @@ chmod 755 /usr/local/bigbluebutton/core/scripts/post_publish/*
 
 
 #Set up NGINX to make MP4 files available for createwebinar.com
-mkdir /var/www/bigbluebutton-default/download
+mkdir -p /var/www/bigbluebutton-default/download
 ln -s /var/bigbluebutton/published/presentation /var/www/bigbluebutton-default/download
 chmod 0755 /var/bigbluebutton/published/presentation
 
 # Create log directory
 mkdir -p /var/log/bigbluebutton/download
-chown tomcat7:tomcat7 /var/log/bigbluebutton/download
+chown tomcat8:tomcat8 /var/log/bigbluebutton/download
 chmod -R go+rw /var/log/bigbluebutton/download/
 
 # Copy python scripts to post_publish directory
