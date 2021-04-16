@@ -54,7 +54,6 @@ def extract_timings(bbb_version):
 
         in_times = str(image.getAttribute('in')).split(' ')
         out_times = image.getAttribute('out').split(' ')
-
         temp = float(out_times[len(out_times) - 1])
         if temp > total_length:
             total_length = temp
@@ -169,15 +168,15 @@ def check_presentation_dims(dictionary, dims, bbb_version):
 
 def prepare(bbb_version):
     if not os.path.exists(target_dir):
-        os.mkdir(target_dir)
+        os.makedirs(target_dir)
 
     if not os.path.exists(temp_dir):
-        os.mkdir(temp_dir)
+        os.makedirs(temp_dir)
 
     if not os.path.exists('audio'):
         global audio_path
         audio_path = temp_dir + 'audio/'
-        os.mkdir(audio_path)
+        os.makedirs(audio_path)
         ffmpeg.extract_audio_from_video(source_dir + 'video/webcams.webm', audio_path + 'audio.ogg')
 
     shutil.copytree("presentation", temp_dir + "presentation")
